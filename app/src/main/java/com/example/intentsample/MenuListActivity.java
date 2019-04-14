@@ -1,7 +1,10 @@
 package com.example.intentsample;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -79,16 +82,21 @@ public class MenuListActivity extends AppCompatActivity {
 
         lvMenu.setAdapter(adapter);
 
-
-
-
-
-
-
-
-
-
-
-
+        lvMenu.setOnItemClickListener(new ListItemClickListener());
     }
+
+    private class ListItemClickListener implements AdapterView.OnItemClickListener{
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            Map<String,String> item = (Map<String, String>) parent.getItemAtPosition(position);
+            String menuName = item.get("name");
+            String menuPrice = item.get("price");
+
+            Intent intent = new Intent(MenuListActivity.this,MenuThanksActivity.class);
+            intent.putExtra("menuName",menuName);
+            intent.putExtra("menuPrice",menuPrice);
+            startActivity(intent);
+        }
+    }
+
 }
